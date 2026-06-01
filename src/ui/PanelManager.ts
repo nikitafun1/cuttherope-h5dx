@@ -97,8 +97,8 @@ class PanelManager {
         this.shadowPanelElement = document.getElementById("shadowPanel");
 
         if (this.shadowCanvas) {
-            this.shadowCanvas.width = resolution.uiScaledNumber(1024);
-            this.shadowCanvas.height = resolution.uiScaledNumber(576);
+            this.shadowCanvas.width = resolution.UI_WIDTH;
+            this.shadowCanvas.height = resolution.UI_HEIGHT;
         }
     }
 
@@ -187,13 +187,16 @@ class PanelManager {
             }
 
             // rotate and draw
-            ctx.save();
-            ctx.translate(this.shadowImage.width * 0.5, this.shadowImage.height * 0.5);
-            ctx.translate(resolution.uiScaledNumber(-300), resolution.uiScaledNumber(-510));
-            ctx.rotate((this.shadowAngle * Math.PI) / 180);
-            ctx.translate(-this.shadowImage.width * 0.5, -this.shadowImage.height * 0.5);
-            ctx.drawImage(this.shadowImage, 0, 0);
-            ctx.restore();
+            if (this.shadowImage.width > 0) {
+                ctx.save();
+                const centerX = this.shadowCanvas.width * 0.5 + resolution.uiScaledNumber(-12);
+                const centerY = this.shadowCanvas.height * 0.5 + resolution.uiScaledNumber(2);
+                ctx.translate(centerX, centerY);
+                ctx.rotate((this.shadowAngle * Math.PI) / 180);
+                ctx.translate(-this.shadowImage.width * 0.5, -this.shadowImage.height * 0.5);
+                ctx.drawImage(this.shadowImage, 0, 0);
+                ctx.restore();
+            }
 
             raf(renderShadow);
         };

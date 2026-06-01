@@ -40,14 +40,18 @@ class BoxDoors {
         BoxDoors.canvasLeft = left;
         BoxDoors.canvasRight = right;
 
-        const scaledWidth = (resolution.uiScaledNumber(1024) / 2) | 0;
-        const scaledHeight = resolution.uiScaledNumber(576);
+        const scaledWidth = (resolution.UI_WIDTH / 2) | 0;
+        const scaledHeight = resolution.UI_HEIGHT;
 
         left.width = scaledWidth;
         right.width = scaledWidth;
 
         left.height = scaledHeight;
         right.height = scaledHeight;
+        left.style.width = `${scaledWidth}px`;
+        left.style.height = `${scaledHeight}px`;
+        right.style.width = `${scaledWidth}px`;
+        right.style.height = `${scaledHeight}px`;
 
         BoxDoors.currentIndex = BoxManager.currentBoxIndex;
         BoxDoors.showTape = true;
@@ -86,6 +90,7 @@ class BoxDoors {
         }
 
         const doorImg = BoxDoors.#doorImages[BoxManager.currentBoxIndex];
+        BoxDoors.#updateLevelBackground(doorImg);
 
         if (!doorImg) {
             leftCtx.clearRect(0, 0, left.width, left.height);
@@ -111,12 +116,12 @@ class BoxDoors {
         leftCtx.clearRect(0, 0, left.width, left.height);
         rightCtx.clearRect(0, 0, right.width, right.height);
 
-        leftCtx.drawImage(doorImg, 0, 0);
+        leftCtx.drawImage(doorImg, 0, 0, left.width, left.height);
 
         rightCtx.save();
-        rightCtx.translate(doorImg.width, doorImg.height);
+        rightCtx.translate(right.width, right.height);
         rightCtx.rotate(Math.PI);
-        rightCtx.drawImage(doorImg, 0, 0);
+        rightCtx.drawImage(doorImg, 0, 0, right.width, right.height);
         rightCtx.restore();
 
         if (BoxDoors.showTape) {
@@ -305,6 +310,18 @@ class BoxDoors {
         }
 
         return BoxDoors.#getDoorCanvases();
+    }
+
+    static #updateLevelBackground(doorImg: HTMLImageElement | undefined): void {
+        const levelBackground = document.getElementById("levelBackground");
+        if (!(levelBackground instanceof HTMLElement) || !doorImg?.src) {
+            return;
+        }
+
+        levelBackground.style.backgroundImage = `url("${doorImg.src}")`;
+        levelBackground.style.backgroundSize = "cover";
+        levelBackground.style.backgroundPosition = "center center";
+        levelBackground.style.backgroundRepeat = "no-repeat";
     }
 }
 

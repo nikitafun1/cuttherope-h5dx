@@ -4,6 +4,7 @@ import LevelState from "@/game/LevelState";
 import ResourceMgr from "@/resources/ResourceMgr";
 import Log from "@/utils/Log";
 import edition from "@/config/editions/net-edition";
+import resolution from "@/resolution";
 import * as GameSceneConstants from "@/gameScene/constants";
 import type GameSceneInit from "../init";
 
@@ -51,6 +52,7 @@ export function initBackground(this: GameSceneInit): boolean {
     }
     this.back.addTile(bgTexture, GameSceneConstants.IMG_BGR_01_bgr);
     this.back.fill(0, 0, 1, 1, 0);
+    this.back.x = (resolution.CANVAS_WIDTH - this.back.width) / 2;
 
     return true;
 }

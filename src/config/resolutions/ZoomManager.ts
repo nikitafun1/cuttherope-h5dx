@@ -59,6 +59,10 @@ class ZoomManager {
             return;
         }
 
+        // Dynamically fetch the latest resolution values
+        this.#nativeWidth = resolution.UI_WIDTH;
+        this.#nativeHeight = resolution.UI_HEIGHT;
+
         const vpWidth = window.innerWidth;
         const vpHeight = window.innerHeight;
 
@@ -67,7 +71,14 @@ class ZoomManager {
         const originalHeight = this.originalHeight;
 
         if (!skipZoom) {
-            this.#zoom = Math.min(vpWidth / nativeWidth, vpHeight / nativeHeight);
+            const scaleMode = (window as unknown as Record<string, string>).mobileScaleMode || "native";
+            if (scaleMode === "crop") {
+                // Crop mode: Zoom to fill the screen height (crops sides in landscape)
+                this.#zoom = vpHeight / nativeHeight;
+            } else {
+                // Native/Fit mode: Zoom to fit inside viewport
+                this.#zoom = Math.min(vpWidth / nativeWidth, vpHeight / nativeHeight);
+            }
         }
 
         this.#bgZoom = vpHeight / (originalHeight * this.#zoom);

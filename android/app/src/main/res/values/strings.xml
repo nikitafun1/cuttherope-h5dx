@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Cut the Rope Burmalda</string>
+    <string name="title_activity_main">Cut the Rope Burmalda</string>
+    <string name="package_name">com.drunsoft.cuttheropeburmalda</string>
+    <string name="custom_url_scheme">com.drunsoft.cuttheropeburmalda</string>
+</resources>

@@ -56,6 +56,27 @@ const getCandyResourceIdForBox = (boxIndex: number): number => {
     return ResourceId.IMG_OBJ_CANDY_02 + (selectedSkin - 1);
 };
 
+const addTapListener = (element: HTMLElement, action: (event: Event) => void): void => {
+    let lastPointerTap = 0;
+
+    const handler = (event: Event) => {
+        event.preventDefault();
+
+        const now = Date.now();
+        if (event.type === "click" && now - lastPointerTap < 700) {
+            return;
+        }
+        if (event.type === "pointerdown") {
+            lastPointerTap = now;
+        }
+
+        action(event);
+    };
+
+    element.addEventListener("pointerdown", handler, { passive: false });
+    element.addEventListener("click", handler);
+};
+
 class SkinSelectionView {
     private mode: SkinMode = "candy";
     private currentPage = 0;
@@ -86,12 +107,12 @@ class SkinSelectionView {
 
         if (!this.tabsBuilt) {
             this.buildTabs();
-            this.backButton.addEventListener("click", () => {
+            addTapListener(this.backButton, () => {
                 SoundMgr.playSound(ResourceId.SND_TAP);
                 panelManager.showPanel(PanelId.MENU);
             });
 
-            this.navBack.addEventListener("click", () => {
+            addTapListener(this.navBack, () => {
                 if (this.currentPage > 0) {
                     SoundMgr.playSound(ResourceId.SND_TAP);
                     this.currentPage--;
@@ -99,7 +120,7 @@ class SkinSelectionView {
                 }
             });
 
-            this.navForward.addEventListener("click", () => {
+            addTapListener(this.navForward, () => {
                 const totalPages = this.getTotalPages();
                 if (this.currentPage < totalPages - 1) {
                     SoundMgr.playSound(ResourceId.SND_TAP);
@@ -206,7 +227,7 @@ class SkinSelectionView {
 
         tab.appendChild(textImg);
 
-        tab.addEventListener("click", () => {
+        addTapListener(tab, () => {
             if (this.mode === mode) {
                 return;
             }
@@ -295,7 +316,7 @@ class SkinSelectionView {
         slot.appendChild(bg);
         slot.appendChild(icon);
 
-        slot.addEventListener("click", () => {
+        addTapListener(slot, () => {
             SoundMgr.playSound(ResourceId.SND_TAP);
             if (isCandyMode) {
                 SettingStorage.set(SETTING_KEYS.CANDY, index);

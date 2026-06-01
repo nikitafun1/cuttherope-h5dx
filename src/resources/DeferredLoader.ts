@@ -54,7 +54,8 @@ class DeferredLoader {
             return taggedResolved();
         }
 
-        const gameBaseUrl = `${platform.imageBaseUrl}${resolution.CANVAS_WIDTH}/game/`;
+        const pathRes = resolution.CANVAS_WIDTH === 720 ? 1920 : resolution.CANVAS_WIDTH;
+        const gameBaseUrl = `${platform.imageBaseUrl}${pathRes}/game/`;
         const total = idsToLoad.length;
         let completed = 0;
 

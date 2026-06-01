@@ -118,19 +118,33 @@ class BoxPanel extends Panel {
             this.$navBack = document.getElementById("boxNavBack");
             this.$navForward = document.getElementById("boxNavForward");
 
-            this.$navBack?.addEventListener("click", () => {
+            let lastNavBack = 0;
+            const navBackAction = (e: Event) => {
+                e.preventDefault();
+                const now = Date.now();
+                if (now - lastNavBack < 300) return;
+                lastNavBack = now;
                 if (this.currentBoxIndex > 0) {
                     this.slideToBox(this.currentBoxIndex - 1);
                     SoundMgr.playSound(ResourceId.SND_TAP);
                 }
-            });
+            };
+            this.$navBack?.addEventListener("pointerdown", navBackAction);
+            this.$navBack?.addEventListener("click", navBackAction);
 
-            this.$navForward?.addEventListener("click", () => {
+            let lastNavForward = 0;
+            const navForwardAction = (e: Event) => {
+                e.preventDefault();
+                const now = Date.now();
+                if (now - lastNavForward < 300) return;
+                lastNavForward = now;
                 if (this.currentBoxIndex < this.boxes.length - 1) {
                     this.slideToBox(this.currentBoxIndex + 1);
                     SoundMgr.playSound(ResourceId.SND_TAP);
                 }
-            });
+            };
+            this.$navForward?.addEventListener("pointerdown", navForwardAction);
+            this.$navForward?.addEventListener("click", navForwardAction);
 
             const plate = document.getElementById("boxUpgradePlate");
             plate?.addEventListener("click", () => {

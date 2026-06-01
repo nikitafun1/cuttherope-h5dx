@@ -180,16 +180,28 @@ class LevelPanel extends Panel {
             }
         }
 
-        this.levelNavBack?.addEventListener("click", () => {
+        let lastLevelNavBack = 0;
+        const levelNavBackAction = (e: Event) => {
+            e.preventDefault();
+            const now = Date.now();
+            if (now - lastLevelNavBack < 300) return;
+            lastLevelNavBack = now;
             if (this.currentPage === 0) {
                 return;
             }
             this.currentPage -= 1;
             SoundMgr.playSound(ResourceId.SND_TAP);
             this.updateLevelOptions();
-        });
+        };
+        this.levelNavBack?.addEventListener("pointerdown", levelNavBackAction);
+        this.levelNavBack?.addEventListener("click", levelNavBackAction);
 
-        this.levelNavForward?.addEventListener("click", () => {
+        let lastLevelNavForward = 0;
+        const levelNavForwardAction = (e: Event) => {
+            e.preventDefault();
+            const now = Date.now();
+            if (now - lastLevelNavForward < 300) return;
+            lastLevelNavForward = now;
             const boxIndex = BoxManager.currentBoxIndex;
             const levelCount = ScoreManager.levelCount(boxIndex) ?? 0;
             const totalPages = calculateTotalPages(levelCount);
@@ -199,7 +211,9 @@ class LevelPanel extends Panel {
             this.currentPage += 1;
             SoundMgr.playSound(ResourceId.SND_TAP);
             this.updateLevelOptions();
-        });
+        };
+        this.levelNavForward?.addEventListener("pointerdown", levelNavForwardAction);
+        this.levelNavForward?.addEventListener("click", levelNavForwardAction);
 
         if (levelOptions instanceof HTMLElement) {
             for (let i = 0; i < MAX_LEVELS_PER_PAGE; i++) {

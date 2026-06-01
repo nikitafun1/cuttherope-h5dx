@@ -44,7 +44,8 @@ class WebPlatform {
 
     static getDrawingBaseUrl() {
         const baseUrl = `${window.location.protocol}//${window.location.host}`;
-        return `${baseUrl}/images/${resolution.UI_WIDTH}/ui/`;
+        const width = resolution.UI_WIDTH === 720 ? 1920 : resolution.UI_WIDTH;
+        return `${baseUrl}/images/${width}/ui/`;
     }
 
     static getScoreImageBaseUrl() {

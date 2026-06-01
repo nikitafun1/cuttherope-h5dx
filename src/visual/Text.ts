@@ -13,7 +13,7 @@ import LangId from "@/resources/LangId";
 
 // Set to true to use the old sprite-based font rendering system
 // Set to false (default) to use webfont-based rendering with stroke and shadow
-const useOldFontRenderingSystem = false;
+const useOldFontRenderingSystem = true;
 
 interface XmlElement {
     hasAttribute: (name: string) => boolean;

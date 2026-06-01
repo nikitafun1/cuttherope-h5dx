@@ -156,7 +156,8 @@ class PreLoader {
     }
 
     private loadImages(): { trackedResourceCount: number } {
-        const gameBaseUrl = `${platform.imageBaseUrl}${resolution.CANVAS_WIDTH}/game/`;
+        const pathRes = resolution.CANVAS_WIDTH === 720 ? 1920 : resolution.CANVAS_WIDTH;
+        const gameBaseUrl = `${platform.imageBaseUrl}${pathRes}/game/`;
         const { resources, menuResourceCount } = this.collectImageResources(gameBaseUrl);
 
         let menuLoaded = 0;

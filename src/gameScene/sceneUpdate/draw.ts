@@ -57,15 +57,41 @@ const drawImpl = function drawImpl(scene: GameScene): void {
     scene.preDraw();
     const interpCameraPos = scene.camera.applyInterpolatedTransformation(interpAlpha);
 
-    // Draw background image directly on canvas (TileMap not rendering, needed for composite blending)
+    // Draw background image directly on canvas
     if (scene.bgTexture?.image) {
-        ctx.drawImage(
-            scene.bgTexture.image,
-            0,
-            0,
-            resolution.CANVAS_WIDTH,
-            resolution.CANVAS_HEIGHT
-        );
+        const mode = (window as unknown as Record<string, string>).mobileScaleMode || "native";
+        if (mode === "native") {
+            const img = scene.bgTexture.image;
+            const imgW = img.width || 1920;
+            const imgH = img.height || 1080;
+            const canvasW = resolution.CANVAS_WIDTH;
+            const canvasH = resolution.CANVAS_HEIGHT;
+            
+            const destH = canvasW * (imgH / imgW);
+            const centerY = canvasH / 2;
+            const startY = centerY - destH / 2;
+
+            ctx.drawImage(img, 0, startY, canvasW, destH);
+            
+            let y = startY - destH;
+            while (y + destH > 0) {
+                ctx.drawImage(img, 0, y, canvasW, destH);
+                y -= destH;
+            }
+            y = startY + destH;
+            while (y < canvasH) {
+                ctx.drawImage(img, 0, y, canvasW, destH);
+                y += destH;
+            }
+        } else {
+            ctx.drawImage(
+                scene.bgTexture.image,
+                0,
+                0,
+                resolution.CANVAS_WIDTH,
+                resolution.CANVAS_HEIGHT
+            );
+        }
     }
 
     scene.back.updateWithCameraPos(interpCameraPos);

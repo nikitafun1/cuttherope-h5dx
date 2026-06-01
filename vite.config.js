@@ -12,6 +12,7 @@ const APP_VERSION = "7";
 export default defineConfig(({ mode }) => {
     const isDev = mode === "development";
     const base = process.env.VITE_BASE_NETLIFY || (isDev ? "/" : "/cuttherope-h5dx");
+    const appBase = base.endsWith("/") ? base : `${base}/`;
     const enablePWA = !process.env.VITE_BASE_NETLIFY;
 
     return {
@@ -34,9 +35,10 @@ export default defineConfig(({ mode }) => {
                         short_name: "Cut the Rope: H5DX",
                         description:
                             "Play Cut the Rope! A mysterious package has arrived, and the little monster inside has only one request… CANDY!",
-                        start_url: `/${base}/`,
-                        scope: `/${base}/`,
-                        display: "standalone",
+                        start_url: appBase,
+                        scope: appBase,
+                        display: "fullscreen",
+                        display_override: ["fullscreen", "standalone"],
                         theme_color: "#000000",
                         background_color: "#000000",
                         icons: [

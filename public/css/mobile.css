@@ -1,0 +1,332 @@
+/* Safe area variables */
+:root {
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+  --mobile-stage-width: 720px;
+  --mobile-stage-height: 1280px;
+}
+
+/* Mobile basic rules */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden !important;
+  touch-action: none !important;
+  overscroll-behavior: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  background-color: #000 !important;
+}
+
+#gameContainer {
+  margin: 0 auto !important;
+}
+
+/* --- Native Portrait Mode (720px wide, dynamic phone-height viewport) --- */
+.scale-mode-native #gameContainer,
+.scale-mode-native #gameArea,
+.scale-mode-native #c,
+.scale-mode-native .panel,
+.scale-mode-native #shadowCanvas {
+  width: var(--mobile-stage-width) !important;
+  height: var(--mobile-stage-height) !important;
+}
+
+/* Restart & Menu buttons tray: move to top right, offset by safe area */
+.scale-mode-native #gameBtnTray {
+  top: calc(20px + var(--safe-area-top)) !important;
+  right: calc(20px + var(--safe-area-right)) !important;
+  left: auto !important;
+}
+
+/* Stars achieved indicator: move to top left, offset by safe area */
+.scale-mode-native #levelScore,
+.scale-mode-native #boxScore {
+  top: calc(20px + var(--safe-area-top)) !important;
+  left: calc(20px + var(--safe-area-left)) !important;
+  right: auto !important;
+}
+
+/* Back button: move to bottom left, offset by safe area */
+.scale-mode-native .bBtn,
+.scale-mode-native #levelBack,
+.scale-mode-native #boxBack,
+.scale-mode-native #optionsBack,
+.scale-mode-native #skinBack,
+.scale-mode-native #gameCompleteBack {
+  top: calc(var(--mobile-stage-height) - 130px - var(--safe-area-bottom)) !important;
+  left: calc(20px + var(--safe-area-left)) !important;
+}
+
+/* --- Main Menu (Portrait) --- */
+.scale-mode-native #menuLogo {
+  left: 33px !important;
+  top: max(70px, calc((var(--mobile-stage-height) - 1280px) * 0.28 + 120px)) !important;
+}
+
+.scale-mode-native #menuCandySkin {
+  left: 364px !important;
+  top: max(420px, calc((var(--mobile-stage-height) - 1280px) * 0.32 + 500px)) !important;
+}
+
+.scale-mode-native #menuCandyHand {
+  left: 507px !important;
+  top: max(498px, calc((var(--mobile-stage-height) - 1280px) * 0.32 + 578px)) !important;
+}
+
+.scale-mode-native #menuBtnVbox {
+  top: calc(var(--mobile-stage-height) - 360px) !important;
+  left: 76px !important;
+}
+
+.scale-mode-native #miniOptionsMenu {
+  top: calc(var(--mobile-stage-height) - 75px) !important;
+  left: 15px !important;
+}
+
+/* Main menu background: scale to fill and push the green band lower */
+.scale-mode-native #startBackground,
+.scale-mode-native #menuBackground {
+  background-size: cover !important;
+  background-position: center bottom !important;
+  background-repeat: no-repeat !important;
+}
+
+.scale-mode-native #levelBackground {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* --- Box Selection Grid (Portrait) --- */
+.scale-mode-native #boxCanvas {
+  position: absolute !important;
+  left: -600px !important;
+  top: calc((var(--mobile-stage-height) - 1280px) * 0.35) !important;
+  width: 1920px !important;
+  height: 1080px !important;
+}
+
+.scale-mode-native #boxNavBack {
+  left: 10px !important;
+  top: calc(var(--mobile-stage-height) * 0.45) !important;
+}
+
+.scale-mode-native #boxNavForward {
+  left: 600px !important;
+  top: calc(var(--mobile-stage-height) * 0.45) !important;
+}
+
+/* --- Level Grid (Portrait) --- */
+.scale-mode-native #levelOptions {
+  transform: scale(0.65) !important;
+  transform-origin: center center !important;
+  left: 58px !important;
+  top: calc((var(--mobile-stage-height) - 1280px) * 0.25 + 220px) !important;
+}
+
+.scale-mode-native #levelNavBack {
+  left: 10px !important;
+  top: calc(var(--mobile-stage-height) * 0.42) !important;
+  transform: scale(0.8) !important;
+  transform-origin: left center !important;
+  display: block !important;
+}
+
+.scale-mode-native #levelNavForward {
+  left: 610px !important;
+  top: calc(var(--mobile-stage-height) * 0.42) !important;
+  transform: scale(0.8) !important;
+  transform-origin: right center !important;
+  display: block !important;
+}
+
+/* --- Options Panel (Portrait) --- */
+/* Center the button stack in the viewport regardless of its height */
+.scale-mode-native #optionsPanel .fBtnVBox {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) scale(0.85) !important;
+  transform-origin: center center !important;
+  margin: 0 !important;
+}
+
+/* Touch-only build: hide the mouse "drag to cut / click to cut" selector */
+.scale-mode-native #dragBtn,
+.scale-mode-native #cutBtn {
+  display: none !important;
+}
+
+/* Lower the language flag so it lines up with the "Language:" text */
+.scale-mode-native #flag {
+  top: -11px !important;
+}
+
+/* Shrink + center the speaker / music-note glyphs inside their pill buttons */
+.scale-mode-native #options-speaker {
+  left: 78px !important;
+  top: 12px !important;
+  transform: scale(0.8) !important;
+  transform-origin: center center !important;
+}
+
+.scale-mode-native #options-note {
+  left: 95px !important;
+  top: 9px !important;
+  transform: scale(0.8) !important;
+  transform-origin: center center !important;
+}
+
+/* --- Skin Selection Panel (Portrait) --- */
+.scale-mode-native #skinPanel #skinGrid {
+  transform: scale(0.75) !important;
+  transform-origin: center center !important;
+  margin-top: 150px !important;
+}
+
+.scale-mode-native #skinNavBack {
+  left: 10px !important;
+  top: calc(var(--mobile-stage-height) * 0.48) !important;
+}
+
+.scale-mode-native #skinNavForward {
+  left: 600px !important;
+  top: calc(var(--mobile-stage-height) * 0.48) !important;
+}
+
+.scale-mode-native #skinTabs .sBtn,
+.scale-mode-native .skin-slot,
+.scale-mode-native #skinBack,
+.scale-mode-native #skinNavBack,
+.scale-mode-native #skinNavForward {
+  touch-action: manipulation !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+}
+
+/* --- Level Complete Results Panel (Portrait) --- */
+.scale-mode-native #levelResults {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  margin: 0 !important;
+  transform: translate(-50%, -50%) scale(0.65) !important;
+  transform-origin: center center !important;
+}
+
+/* --- Slow warning & Resets popups (Portrait) --- */
+.scale-mode-native #popupWindow .popupOuterFrame {
+  position: absolute !important;
+  left: 50% !important;
+  top: calc((var(--mobile-stage-height) - 1280px) * 0.25 + 250px) !important;
+  margin: 0 !important;
+  transform: translate(-50%, 0) scale(0.55) !important;
+  transform-origin: center top !important;
+}
+
+/* --- Pause Menu / Level Menu (Portrait) --- */
+.scale-mode-native #levelMenu {
+  width: var(--mobile-stage-width) !important;
+  height: var(--mobile-stage-height) !important;
+  padding-top: 0 !important;
+}
+
+.scale-mode-native #levelMenu .fBtnVBox {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) scale(0.85) !important;
+  transform-origin: center center !important;
+  margin: 0 !important;
+}
+
+/* --- Game Complete / Congratulations Panel (Portrait) --- */
+.scale-mode-native #gameCompletePanel #congrats {
+  top: calc((var(--mobile-stage-height) - 1280px) * 0.25 + 250px) !important;
+}
+
+.scale-mode-native #gameCompletePanel #finalScore {
+  top: calc((var(--mobile-stage-height) - 1280px) * 0.35 + 550px) !important;
+  transform: scale(0.75) !important;
+}
+
+.scale-mode-native #gameCompletePanel #finalFunBtn {
+  top: calc((var(--mobile-stage-height) - 1280px) * 0.45 + 750px) !important;
+  left: 100px !important;
+  transform: scale(0.75) !important;
+}
+
+/* --- Processing / loading spinner (Portrait) --- */
+/* Overlay + icon are hard-positioned for 1920x1080; recenter for 720x1280.
+   Centered via left/top (not transform) since transform runs the spin anim. */
+.scale-mode-native #processingOverlay {
+  width: var(--mobile-stage-width) !important;
+  height: var(--mobile-stage-height) !important;
+}
+
+.scale-mode-native #processingIcon {
+  left: 264px !important;
+  top: calc((var(--mobile-stage-height) - 192px) / 2) !important;
+}
+
+/* --- Better Loader (Portrait) --- */
+.scale-mode-native #betterLoader {
+  background-size: contain !important;
+  background-position: center !important;
+}
+
+.scale-mode-native #track {
+  left: 100px !important;
+  top: calc(var(--mobile-stage-height) - 380px) !important;
+}
+
+/* --- Box Cutter & Tape Roll animations (Portrait) --- */
+.scale-mode-native #boxCutter {
+  display: none;
+  position: absolute !important;
+  left: -15px !important;
+  transform: scale(0.6) !important;
+  transform-origin: left top !important;
+}
+
+.scale-mode-native #tapeRoll {
+  display: none;
+  position: absolute !important;
+  left: 275px !important;
+  transform: scale(0.6) !important;
+  transform-origin: left top !important;
+}
+
+.scale-mode-native #levelTape {
+  left: 311px !important;
+}
+
+/* --- Intro/Outro Video (Portrait) --- */
+.scale-mode-native #vid {
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: var(--mobile-stage-width) !important;
+  height: var(--mobile-stage-height) !important;
+  object-fit: cover !important;
+  background: #000 !important;
+  z-index: 99 !important;
+}
+
+/* Increase tap target areas for all navigation arrows */
+.scale-mode-native #boxNavBack,
+.scale-mode-native #boxNavForward,
+.scale-mode-native #levelNavBack,
+.scale-mode-native #levelNavForward,
+.scale-mode-native #skinNavBack,
+.scale-mode-native #skinNavForward {
+  padding: 30px !important;
+  margin: -30px !important;
+  cursor: pointer !important;
+}
