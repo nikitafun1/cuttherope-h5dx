@@ -1,4 +1,4 @@
-# Cut the Rope Burmalda - Mobile Android Build Guide
+# Cut the Rope - Mobile Android Build Guide
 
 This document describes the mobile Android port of Cut the Rope (`cuttherope-h5dx`) using Capacitor.
 
